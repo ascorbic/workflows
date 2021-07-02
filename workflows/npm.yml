@@ -1,0 +1,16 @@
+on:
+  npm:
+    name: next
+jobs:
+  test:
+    name: Test next.js release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout test site
+        uses: actions/checkout@v2
+        with:
+          repository: https://github.com/netlify/netlify-plugin-nextjs
+      - run: npm ci
+      - name: Installing new version of next.js
+        run: npm i -D ${{ on.npm.outputs.name) }}@${{ on.npm.outputs.version) }}
+      - run: npm test
