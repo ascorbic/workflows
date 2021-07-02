@@ -1,6 +1,7 @@
 on:
   npm:
     name: next
+    version: canary
 jobs:
   test:
     name: Test next.js release
