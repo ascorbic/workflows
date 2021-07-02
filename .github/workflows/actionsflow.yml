@@ -1,7 +1,7 @@
 name: Actionsflow
 on:
-  # schedule:
-  #   - cron: "*/15 * * * *"
+  schedule:
+    - cron: "*/15 * * * *"
   push:
     branches:
       - main
@@ -9,7 +9,10 @@ on:
   workflow_dispatch:
     inputs:
       include:
-        description: "--include: workflow file filter, you can use glob format to filter your workflows, the default value is empty value, means no filter will be using"
+        description:
+          "--include: workflow file filter, you can use glob format to filter
+          your workflows, the default value is empty value, means no filter will
+          be using"
         required: false
         default: ""
       force:
@@ -45,7 +48,11 @@ jobs:
         if: steps.runningCount.outputs.result=='1'
         uses: actionsflow/actionsflow-action@v1
         with:
-          args: "build --include ${{ github.event.inputs.include || ''}} -f ${{github.event.inputs.force=='true' && 'true' || 'false'}} --verbose ${{github.event.inputs.verbose=='true' && 'true' || 'false'}}"
+          args:
+            "build --include ${{ github.event.inputs.include || ''}} -f
+            ${{github.event.inputs.force=='true' && 'true' || 'false'}}
+            --verbose ${{github.event.inputs.verbose=='true' && 'true' ||
+            'false'}}"
           json-secrets: ${{ toJSON(secrets) }}
           json-github: ${{ toJSON(github) }}
       - name: Setup act
@@ -53,4 +60,8 @@ jobs:
         uses: actionsflow/setup-act-for-actionsflow@v1
       - name: Run act
         if: steps.runningCount.outputs.result=='1'
-        run: act --workflows ./dist/workflows --secret-file ./dist/.secrets --eventpath ./dist/event.json --env-file ./dist/.env -P ubuntu-latest=actionsflow/act-environment:v1 -P ubuntu-18.04=actionsflow/act-environment:v1
+        run:
+          act --workflows ./dist/workflows --secret-file ./dist/.secrets
+          --eventpath ./dist/event.json --env-file ./dist/.env -P
+          ubuntu-latest=actionsflow/act-environment:v1 -P
+          ubuntu-18.04=actionsflow/act-environment:v1
