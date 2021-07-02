@@ -10,8 +10,10 @@ jobs:
       - name: Checkout test site
         uses: actions/checkout@v2
         with:
-          repository: https://github.com/netlify/netlify-plugin-nextjs
-      - run: npm ci
-      - name: Installing new version of next.js
-        run: npm i -D ${{ on.npm.outputs.name) }}@${{ on.npm.outputs.version) }}
-      - run: npm test
+          repository: netlify/netlify-plugin-nextjs
+      - name: Install dependencies
+        run: npm ci
+      - name: Installing new version of Next.js
+        run: npm i -D ${{ on.npm.outputs.name }}@${{ on.npm.outputs.version }}
+      - name: Run tests
+        run: npm test
