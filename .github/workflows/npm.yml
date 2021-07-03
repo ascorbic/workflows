@@ -21,10 +21,11 @@ jobs:
         if: ${{ failure() }}
         env:
           SLACK_WEBHOOK: ${{ secrets.NEXT_SLACK_WEBHOOK }}
+          JOB_CONTEXT: ${{ toJSON(job) }}
         uses: Ilshidur/action-slack@2.0.2
         with:
           args:
-            Build failed
+            Build failed ${{JOB_CONTEXT}}
             # Build failed with ${{ on.npm.outputs.name }}@${{
             # on.npm.outputs.version }}
       - name: Slack succeed notification
