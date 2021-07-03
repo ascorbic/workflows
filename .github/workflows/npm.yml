@@ -25,7 +25,7 @@ jobs:
         uses: Ilshidur/action-slack@2.0.2
         with:
           args:
-            Build failed ${{JOB_CONTEXT}}
+            Build failed ${{ toJSON(job) }}
             # Build failed with ${{ on.npm.outputs.name }}@${{
             # on.npm.outputs.version }}
       - name: Slack succeed notification
