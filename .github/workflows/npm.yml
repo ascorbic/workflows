@@ -13,7 +13,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Installing new version of Next.js
-        run: npm i -D ${{ on.npm.outputs.name }}@${{ on.npm.outputs.version }}
+        # run: npm i -D ${{ on.npm.outputs.name }}@${{ on.npm.outputs.version }}
       - name: Run tests
         run: npm test
       - name: Slack fail notification
@@ -23,5 +23,6 @@ jobs:
         uses: Ilshidur/action-slack@2.0.2
         with:
           args:
-            Build failed with ${{ on.npm.outputs.name }}@${{
-            on.npm.outputs.version }}
+            Build failed
+            # Build failed with ${{ on.npm.outputs.name }}@${{
+            # on.npm.outputs.version }}
