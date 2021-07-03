@@ -21,12 +21,13 @@ jobs:
         if: ${{ failure() }}
         env:
           SLACK_WEBHOOK: ${{ secrets.NEXT_SLACK_WEBHOOK }}
-          GITHUB_WORKFLOW_URL: https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}
+          GITHUB_WORKFLOW_URL:
+            https://github.com/${{ github.repository }}/actions/runs/${{
+            github.run_id }}}
         uses: Ilshidur/action-slack@2.0.2
         with:
           args:
-            "Build failed $GITHUB_WORKFLOW_URL ${ GITHUB_WORKFLOW_URL } ${{
-            env.GITHUB_WORKFLOW_URL }}"
+            "Build failed  ${{ env.GITHUB_WORKFLOW_URL }}"
             # Build failed with ${{ on.npm.outputs.name }}@${{
             # on.npm.outputs.version }}
       - name: Slack succeed notification
