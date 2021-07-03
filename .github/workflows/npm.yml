@@ -13,7 +13,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Installing new version of Next.js
-        run: npm i -D ${{ on.npm.outputs.name }}@${{ on.npm.outputs.version }}
+        run: npm i -D next@canary
+        # run: npm i -D ${{ on.npm.outputs.name }}@${{ on.npm.outputs.version }}
       - name: Run tests
         run: npm test
       - name: Slack fail notification
