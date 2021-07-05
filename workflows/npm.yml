@@ -2,8 +2,8 @@ on:
   npm:
     # name: next
     # version: canary
-    name: next
-    version: canary
+    name: "@ascorbic/gatsby-cli-demo"
+    version: latest
 jobs:
   test:
     name: Test next.js release
