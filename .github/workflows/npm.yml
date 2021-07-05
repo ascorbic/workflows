@@ -23,11 +23,11 @@ jobs:
           SLACK_WEBHOOK: ${{ secrets.NEXT_SLACK_WEBHOOK }}
           GITHUB_WORKFLOW_URL:
             https://github.com/${{ github.repository }}/actions/runs/${{
-            github.run_id }}}
+            github.run_id }}
         uses: Ilshidur/action-slack@2.0.2
         with:
           args:
-            "Build failed  ${{ env.GITHUB_WORKFLOW_URL }}"
+            Build failed ${{ env.GITHUB_WORKFLOW_URL }}
             # Build failed with ${{ on.npm.outputs.name }}@${{
             # on.npm.outputs.version }}
       - name: Slack succeed notification
@@ -36,4 +36,4 @@ jobs:
           SLACK_WEBHOOK: ${{ secrets.NEXT_SLACK_WEBHOOK }}
         uses: Ilshidur/action-slack@2.0.2
         with:
-          args: Build success
+          args: New Next canary build succeeded
