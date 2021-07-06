@@ -14,9 +14,11 @@ jobs:
         with:
           repository: netlify/netlify-plugin-nextjs
       - name: Install dependencies
+        env:
+          CYPRESS_INSTALL_BINARY: 0
         run: npm ci
       - name: Fail
-        run: exit 1
+        run: "`exit 1`"
       # - name: Installing new version of Next.js
       #   run: npm i -D ${{ on.npm.outputs.name }}@${{ on.npm.outputs.version }}
       # - name: Run tests
@@ -24,6 +26,7 @@ jobs:
 
       - name: Slack Notification
         uses: edge/simple-slack-notify@master
+        if: always()
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.NEXT_SLACK_WEBHOOK }}
           PACKAGE_VERSION: ${{ on.npm.outputs.version }}
@@ -35,5 +38,3 @@ jobs:
             [{ "title": "Action URL", "value": "${env.GITHUB_SERVER_URL}/${env.GITHUB_REPOSITORY}/actions/runs/${env.GITHUB_RUN_ID}"},
               {"title": "Package version", "value": "${env.PACKAGE_VERSION}", short: true}
             ]
-
-        if: always()
