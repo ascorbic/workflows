@@ -32,11 +32,10 @@ jobs:
             New Next.js canary build failed with ${{ on.npm.outputs.name }}@${{
             on.npm.outputs.version }} \n${{ env.GITHUB_WORKFLOW_URL }}
       - name: Slack Notification
-        if: ${{ success() }}
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_COLOR: ${{ job.status }} # or a specific color like 'green' or '#ff00ff'
-          SLACK_MESSAGE: "Post Content :rocket: ${{ on.npm.outputs.name }}@${{ on.npm.outputs.version }}"
+          SLACK_MESSAGE: "Post Content :rocket:"
           SLACK_TITLE: New Next canary build succeeded
           SLACK_WEBHOOK: ${{ secrets.NEXT_SLACK_WEBHOOK }}
 
