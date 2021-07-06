@@ -17,8 +17,8 @@ jobs:
         run: npm ci
       - name: Installing new version of Next.js
         run: npm i -D ${{ on.npm.outputs.name }}@${{ on.npm.outputs.version }}
-      - name: Run tests
-        run: npm test
+      # - name: Run tests
+      #   run: npm test
       - name: Slack fail notification
         if: ${{ failure() }}
         env:
@@ -32,12 +32,13 @@ jobs:
             New Next.js canary build failed with ${{ on.npm.outputs.name }}@${{
             on.npm.outputs.version }} \n${{ env.GITHUB_WORKFLOW_URL }}
       - name: Slack Notification
+        if: ${{ success() }}
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_COLOR: ${{ job.status }} # or a specific color like 'green' or '#ff00ff'
-          SLACK_MESSAGE: "Post Content :rocket:"
+          SLACK_MESSAGE: "Post Content :rocket: ${{ on.npm.outputs.name }}@${{ on.npm.outputs.version }}"
           SLACK_TITLE: New Next canary build succeeded
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_WEBHOOK: ${{ secrets.NEXT_SLACK_WEBHOOK }}
 
       # - name: Slack succeed notification
       #   if: ${{ success() }}
