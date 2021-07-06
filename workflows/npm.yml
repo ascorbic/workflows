@@ -26,7 +26,7 @@ jobs:
 
       - name: Slack Notification
         uses: edge/simple-slack-notify@master
-        if: always()
+        if: ${{ always() }}
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.NEXT_SLACK_WEBHOOK }}
           PACKAGE_VERSION: ${{ on.npm.outputs.version }}
