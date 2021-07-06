@@ -23,6 +23,12 @@ jobs:
         run: npm i -D next@9
       - name: Run tests
         run: npm test
+      - name: The job has failed
+        if: ${{ failure() }}
+        run: echo the job has failed
+      - name: The job has succeeded
+        if: ${{ success() }}
+        run: echo the job has succeeded
       - name: Slack Notification
         uses: edge/simple-slack-notify@master
         if: ${{ always() }}
