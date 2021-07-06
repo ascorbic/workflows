@@ -32,13 +32,12 @@ jobs:
       #       New Next.js canary build failed with ${{ on.npm.outputs.name }}@${{
       #       on.npm.outputs.version }} \n${{ env.GITHUB_WORKFLOW_URL }}
       - name: Slack Notification
-        if: ${{ always() }}
         uses: adamkdean/simple-slack-notify
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.NEXT_SLACK_WEBHOOK }}
         with:
           status: ${{ job.status }}
-          success_text: New Next canary build succeeded 
+          success_text: New Next canary build succeeded
         if: always()
 
       # - name: Slack succeed notification
