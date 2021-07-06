@@ -15,38 +15,25 @@ jobs:
           repository: netlify/netlify-plugin-nextjs
       - name: Install dependencies
         run: npm ci
+      - name: Fail
+        run: exit 1
       # - name: Installing new version of Next.js
       #   run: npm i -D ${{ on.npm.outputs.name }}@${{ on.npm.outputs.version }}
       # - name: Run tests
       #   run: npm test
-      # - name: Slack fail notification
-      #   if: ${{ failure() }}
-      #   env:
-      #     SLACK_WEBHOOK: ${{ secrets.NEXT_SLACK_WEBHOOK }}
-      #     GITHUB_WORKFLOW_URL:
-      #       https://github.com/${{ github.repository }}/actions/runs/${{
-      #       github.run_id }}
-      #   uses: Ilshidur/action-slack@2.0.2
-      #   with:
-      #     args:
-      #       New Next.js canary build failed with ${{ on.npm.outputs.name }}@${{
-      #       on.npm.outputs.version }} \n${{ env.GITHUB_WORKFLOW_URL }}
+
       - name: Slack Notification
-        uses: adamkdean/simple-slack-notify@master
+        uses: edge/simple-slack-notify@master
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.NEXT_SLACK_WEBHOOK }}
+          PACKAGE_VERSION: ${{ on.npm.outputs.version }}
         with:
           status: ${{ job.status }}
           success_text: New Next canary build succeeded
-        if: always()
+          failure_text: New Next canary build failed
+          fields: |
+            [{ "title": "Action URL", "value": "${env.GITHUB_SERVER_URL}/${env.GITHUB_REPOSITORY}/actions/runs/${env.GITHUB_RUN_ID}"},
+              {"title": "Package version", "value": "${env.PACKAGE_VERSION}", short: true}
+            ]
 
-      # - name: Slack succeed notification
-      #   if: ${{ success() }}
-      #   env:
-      #     SLACK_WEBHOOK: ${{ secrets.NEXT_SLACK_WEBHOOK }}
-      #     GITHUB_WORKFLOW_URL:
-      #       https://github.com/${{ github.repository }}/actions/runs/${{
-      #       github.run_id }}
-      #   uses: Ilshidur/action-slack@2.0.2
-      #   with:
-      #     args: New Next canary build succeeded \n${{ env.GITHUB_WORKFLOW_URL }}
+        if: always()
