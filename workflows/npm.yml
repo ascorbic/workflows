@@ -31,17 +31,21 @@ jobs:
           args:
             New Next.js canary build failed with ${{ on.npm.outputs.name }}@${{
             on.npm.outputs.version }} \n${{ env.GITHUB_WORKFLOW_URL }}
-      - name: Success notification
-        if: ${{ success() }}
-        run: cat ${{ env.GITHUB_EVENT_PATH }}
-
-      - name: Slack succeed notification
-        if: ${{ success() }}
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2
         env:
-          SLACK_WEBHOOK: ${{ secrets.NEXT_SLACK_WEBHOOK }}
-          GITHUB_WORKFLOW_URL:
-            https://github.com/${{ github.repository }}/actions/runs/${{
-            github.run_id }}
-        uses: Ilshidur/action-slack@2.0.2
-        with:
-          args: New Next canary build succeeded \n${{ env.GITHUB_WORKFLOW_URL }}
+          SLACK_COLOR: ${{ job.status }} # or a specific color like 'green' or '#ff00ff'
+          SLACK_MESSAGE: "Post Content :rocket:"
+          SLACK_TITLE: New Next canary build succeeded
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+
+      # - name: Slack succeed notification
+      #   if: ${{ success() }}
+      #   env:
+      #     SLACK_WEBHOOK: ${{ secrets.NEXT_SLACK_WEBHOOK }}
+      #     GITHUB_WORKFLOW_URL:
+      #       https://github.com/${{ github.repository }}/actions/runs/${{
+      #       github.run_id }}
+      #   uses: Ilshidur/action-slack@2.0.2
+      #   with:
+      #     args: New Next canary build succeeded \n${{ env.GITHUB_WORKFLOW_URL }}
