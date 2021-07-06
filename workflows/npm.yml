@@ -32,7 +32,7 @@ jobs:
       #       New Next.js canary build failed with ${{ on.npm.outputs.name }}@${{
       #       on.npm.outputs.version }} \n${{ env.GITHUB_WORKFLOW_URL }}
       - name: Slack Notification
-        uses: adamkdean/simple-slack-notify
+        uses: adamkdean/simple-slack-notify@master
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.NEXT_SLACK_WEBHOOK }}
         with:
